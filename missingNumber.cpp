@@ -9,33 +9,39 @@ bool divisible(int num){
     else return false;
 }
 
-void recorre(int lista[], int size){
+/*void recorre(int lista[], int size){
     for(int i = 0; i<size; i++){
         if(divisible(lista[i])) cout<<"Es divisible de 2: "<< lista[i]<<"\n";
+        else cout <<"no es el: "<< lista[i]<<"\n";
     }
+}*/
+void muestraLista(int lista[], int size){
+    for(int i = 0; i<size; i++){
+        cout<<lista[i]<<" ";
+    }
+    cout<<endl;
 }
-int partition(int array[], int p, int r){
-    int x = 0, i=0, temp = 0;
-    x = array[r];
-    i = p-1;
-    for (int j = p; i <= r-1 ;i++){
-        if(array[j] <= x){
+int partition(int arrayL[], int p, int r){
+    int temp = 0;
+    int x = arrayL[r];
+    int i = (p-1);
+    for (int j = p; j <= r-1 ;j++){
+        if(arrayL[j] <= x){
             i++;
-            temp = array[i];
-            array[i] = array[j];
-            array[j] = temp;
+            temp = arrayL[i];
+            arrayL[i] = arrayL[j];
+            arrayL[j] = temp;
         }
     }
-    temp = array[i+1];
-    array[i+1] = array[r];
-    array[r] = temp;
-    return i+1;
+    temp = arrayL[i+1];
+    arrayL[i+1] = arrayL[r];
+    arrayL[r] = temp;
+    return (i+1);
 }
 void quicksort(int array[], int p, int r){
-    int q = 0;
-    if(p<r){
-        q = partition(array, p, r);
-        quicksort(array, p, q);
+    if(p < r){
+        int q = partition(array, p, r);
+        quicksort(array, p, q - 1);
         quicksort(array, q + 1, r);
     }
 }
@@ -43,11 +49,28 @@ void quicksort(int array[], int p, int r){
 int main(){
     int size = 0, test = 0;
     cin>>test;
-    cin>>size;
-    int lista[size];
-    for(int i=0; i<size;i++){
-        cin>>lista[i];
+    if(test > 10) return 0;
+    while(test > 0){
+        
+        cin>>size;
+        
+        if (size<1 || size > 105) return 0;
+        
+        int lista[size];
+        for(int i=0; i<size;i++){
+            cin>>lista[i];
+        }
+        //muestraLista(lista, size);
+        quicksort(lista, 0, size - 1);
+        //cout<<"ORDENADO"<<endl;
+        //muestraLista(lista, size);
+        if(divisible(lista[size-1])){
+            cout<<lista[size-1] + 2<<endl;
+        }else{
+            lista[size - 1] -= 1;
+            cout<< lista[size-1] + 2<<endl;
+        }
+        test--;
     }
-    recorre(lista, size);
     return 0;
 }
